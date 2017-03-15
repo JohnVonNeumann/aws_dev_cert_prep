@@ -98,8 +98,15 @@
 
 * A security group is just a virtual firewall.
 
-* 1 instance can have multiple security groups.
+* 1 instance can have multiple security groups. The benefit of this is that you can create boilerplate rulesets for different applications, this allows us to leverage effective mental modelling. We know what a standard DB instance's rules will look like, and what a applications rules too. 
 
+* Changes to security group (firewall) rules, are effected immediately, a change to http inbound will be felt straight away, most likely in the form of a timeout.
+
+* Inbound/Outbound is stateful, in that, if you have inbound http rules, you don't require outbound http rules, it will automatically allow traffic back out.
+
+* AWS EC2 instances implement a "trust no one, authenticate few" model of security. In that, by default, ports and protocols are treated as malicious, and are required to be given access case by case. A great way of doing security.
+
+* If you wish to block IP addresses, you cannot do it using SecGroups, you do it with Network Access Control Lists.
 
 
 
