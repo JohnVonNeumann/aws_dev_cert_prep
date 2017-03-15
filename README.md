@@ -1,6 +1,8 @@
 # AWS Certified Developer Prep 
 
 > This repo will be used as I prepare for my AWS Certified Developer certification. I will be committing all notes and code I write over the course of my preparation. 
+* I have actually provisioned my first fully self-deployed webserver in order to apply some of this knowledge. 
+> www.louiswillcock.com
 
 * I am using Udemy to prepare.
 > https://www.udemy.com/aws-certified-developer-associate
@@ -57,7 +59,7 @@
 * Magnetic Standard (HDD)
 > Lowest cost bootable drive. Applications where lower storage cost is importnat.
 
-## EC2 Exam Tips
+### EC2 Exam Tips
 
 * Know the differences between pricing tiers.
 
@@ -83,6 +85,22 @@
 
 
 > Setting up the apache server was actually ridiculously easy. Wow. Superb. Will get my website hosted by the end of the night most likely. 
+
+### Exam Tips
+
+* Termination Protection is turned off by default, you must turn it on. 
+
+* On an EBS-backed instance, the default action is for the root EBS volume to be deleted when the instance is terminated.
+
+* Default AMI root volumes cannot be encrypted, you must create an image of a built VM, then encrypt that. Or you can use bitlocker.
+
+## Security Groups 
+
+* A security group is just a virtual firewall.
+
+* 1 instance can have multiple security groups.
+
+
 
 
 
