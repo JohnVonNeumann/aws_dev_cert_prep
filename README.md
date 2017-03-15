@@ -108,7 +108,25 @@
 
 * If you wish to block IP addresses, you cannot do it using SecGroups, you do it with Network Access Control Lists.
 
+## Volumes VS Snapshots
 
+* When first building an instance and you get to the select EBS or Volume, some choices won't be available. After this, if you decide to add a volume, they will become available. These are the non-root volumes.
+
+* Cannot attach volumes from outside the availablity zone of your instance.
+> IE: If you're instance is in Chicago1A you can't attach a volume from Chicago1B.
+
+* There is a long process with a few steps involved in creating a new volume to add onto an AWS instance. You must provision it from AWS. Attach it to an instance. Then SSH into the instance. From here, run lsblk to find the thing. cd into the / root dir. mkdir whatever you want to call it, myfileserver is a good example. 
+Then from the / root dir. run mkfs -t ext4 /dev/xvdf or the fileextension of the volume. 
+
+* umount to unmount, then unassociate it from AWS. You can then make a snapshot of the volume, which will hold all the data on the volume. Which you can spin up whenever you need.
+
+* Volumes exist on EBS. They are virtual hard disks.
+
+* Snapshots exist on S3.
+
+* Snapshots are point in time copies of Volumes.
+
+* Snapshots are incremental. Only records changes.
 
 
 
