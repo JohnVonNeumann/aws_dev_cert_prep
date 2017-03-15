@@ -69,6 +69,22 @@
 
 * DRMCGIFTPX - EC2 Instance Types
 
+## Configuring instances
+
+#### Subnets, VPC and Avail.Zones.
+
+* Subnets can only be used for one availability zone, ie: sydney-1a or sydney-1b. You can't have subnets across multiple availability zones.
+
+#### Tags
+* Tags should be used in as fine grain way possible. They allow labelling of instances and location of costs in bigger organisations. You use tags to highlight the employee procuring the service, or department budget to charge to. 
+
+#### Security Groups
+* Security Groups are effectively firewalls that we control.
+
+
+> Setting up the apache server was actually ridiculously easy. Wow. Superb. Will get my website hosted by the end of the night most likely. 
+
+
 
 
 
