@@ -139,3 +139,17 @@ Then from the / root dir. run mkfs -t ext4 /dev/xvdf or the fileextension of the
 * You can however edit the policies that are inside that role, these changes occur immediately.
 
 * If you delete the one and only role on your ec2 instance. You are fucked, you are looking at a terminate and new start.
+
+## CLI Commands for the Dev Exam
+
+* aws ec2 describe-instances 
+> Instances available to us
+* aws ec2 describe-images 
+> Images available to us to provision instances from
+* aws s3 ls
+> Lists all s3 buckets.
+* start-instances VS run-instances
+> aws ec2 start-instances is used to start, stopped instances
+> aws ec2 run-instances is used to boot new instances
+
+
