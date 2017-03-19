@@ -132,7 +132,7 @@ Then from the / root dir. run mkfs -t ext4 /dev/xvdf or the fileextension of the
 
 * Use roles instead of storing your access key and secret access key on individual instances. This is because these values are stored in plain text config files, should your ssh keys be stolen or you otherwise lose access. You are pretty much fucked.
 
-* Roles are your friend, much easier to handle and manage than the aws configure command. 
+* Roles are your friend, much easier to handle and manage than the aws configure command.
 
 * Roles are dictated at the start of an instance. You cannot add roles once the instance is spawned.
 
@@ -142,9 +142,9 @@ Then from the / root dir. run mkfs -t ext4 /dev/xvdf or the fileextension of the
 
 ## CLI Commands for the Dev Exam
 
-* aws ec2 describe-instances 
+* aws ec2 describe-instances
 > Instances available to us
-* aws ec2 describe-images 
+* aws ec2 describe-images
 > Images available to us to provision instances from
 * aws s3 ls
 > Lists all s3 buckets.
@@ -152,4 +152,10 @@ Then from the / root dir. run mkfs -t ext4 /dev/xvdf or the fileextension of the
 > aws ec2 start-instances is used to start, stopped instances
 > aws ec2 run-instances is used to boot new instances
 
+## Bash Scripting
 
+* Setting up an S3 bucket, just learnt that the s3 bucket namespace is shared, so you have to pick something unique.
+
+* Key pairs are region specific too, they do not track globally, which is a good thing really, but requires management of a host of keys.
+
+* Pretty cool little lab really, speeds up the process even more. So if you were running a web dev firm, you'd be able to provision standard servers with your details and whatnot super quickly.
