@@ -159,3 +159,26 @@ Then from the / root dir. run mkfs -t ext4 /dev/xvdf or the fileextension of the
 * Key pairs are region specific too, they do not track globally, which is a good thing really, but requires management of a host of keys.
 
 * Pretty cool little lab really, speeds up the process even more. So if you were running a web dev firm, you'd be able to provision standard servers with your details and whatnot super quickly.
+
+## Lambda
+
+* Apparently not currently being asessed in the associate exams, but many expect this to change soon.
+
+* Lambda provides a compute service so you can upload code and everything is taken care of for you. No provisioning of servers yourself, no updating, nothing. You just upload and lambda handles the infrastructure.
+
+* Event driven, basically, you set trigger events and lambda reacts to input.
+
+* Enables creation of serveless environments, you now don't have to pay for small severs, you literally pay for interactions with your site.
+
+* Languages supported:
+1. Node.js
+2. Java
+3. Python
+4. C#
+
+### Lambda Pricing:
+
+* Nnumber of requests:
+> First 1 million requests are free. $0.20 per 1 million requests thereafter.
+
+* Time spent.
