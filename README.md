@@ -182,3 +182,153 @@ Then from the / root dir. run mkfs -t ext4 /dev/xvdf or the fileextension of the
 > First 1 million requests are free. $0.20 per 1 million requests thereafter.
 
 * Time spent.
+
+# Missed Content. Go back and cover load balancers and SDKs.
+
+
+## S3
+
+* S3 is Object based, as opposed to block based. Meaning that files can be uploaded but it cannot be used run OS's off.
+* Size includes 0bytes to 5TB.
+* Unlimited Storage.
+* Files (Objects) are stored in Folders (Buckets).
+* S3 is a universal namespace, ie: names are unique.
+* S3 link format is testable, links look like:
+> https://s3-eu-west-1.amazonaws.com/mybucket
+
+* Read after Write consistency for PUTS of new Objects.
+> When you create an object, it is instantly readable.
+
+* Eventual Consistency for overwrite PUTS and DELETES.
+> Updating and Deleting objects takes much longer to propagate through S3. Not instant.
+
+### S3 Storage Classes/Tiers
+
+* S3 - Durable, Immediately Available, Freq. Access.
+* S3 IA - Durable, Immediately Avail., Infreq. Access.
+* S3 RRS - Reduced Redundancy Storage, easily reproducible data, thumbnails.
+* Glacier - Archival, 3-5 hours for retrieval.
+
+### Core Elements of an S3 Object
+
+* Key - Name
+* Value - Data
+* VersionID
+* Metadata
+* Subresources (Access Control Lists, Torrent)
+
+> Keys are lexographical, they store alphabetically.
+
+## CloudFront - CDN
+
+* Edge Location - Location where content is cached. Separate from an AWS Region.
+* Origin - Origin of the file that CF will distribute. Whether that is an S3 bucket, EC2, ELB or Route53.
+* Distribution - Name of the CDN, contains collection of Edge Locations.
+
+#### Types of Distributions
+* Web Distribution - Typically used for websites.
+* RTMP - Media Streaming.
+
+* Edge Locations are used for write access as well as read access.
+* Objects are cached for the life of the TTL.
+* You can clear cached objects intentionally to make way for new ones, but you will be charged.
+
+## AWS Snowball 
+
+* Import/Export styled data migration service.
+* Used to import data to and from AWS (S3).
+* Briefcase sized small option.
+* Literal truck sized large option.
+* Data stored in glacier has to be restored to S3 before being uploaded to snowball.
+
+## S3 Transfer Acceleration
+* Useful if you have users spread globally.
+* Pretty much useless if you don't have global users.
+
+## Cross Origin Resource Sharing (CORS)
+*
+
+##Databases
+
+### Types of DBs on AWS.
+
+* RDS - OLTP - Relational Databases Systems
+1. SQL
+2. MySQL
+3. PostgreSQL
+4. Oracle
+5. Aurora
+6. MariaDB
+> Apparently don't need to know much about RDS to pass the Dev Exam.
+
+* DynamoDB - NoSQL
+
+* Redshift - OLAP - OnLine Analytics Processing
+
+* ElastiCache - In Memory Caching
+1. Memcached
+2. Redis 
+
+
+* DMS - Database Migration Services
+> Allows you to move exisiting expensive licensed DBs (Oracle) to AWS and onto free OS DBs like MySQL.
+
+
+## DynamoDB - Most important section of the course for taking the exam.
+
+* DynamoDb is a NoSQL DB Service. Fully managed and supports both Document and Key-Value data models. Flexible and reliable.
+
+* Stored on SSD.
+
+* Spread across 3 geographically distinct data centres. These are not availability zones however, and should be thought of differently.
+
+* Eventual Consistent Reads (Default):
+> Data is PUT into one data centre first, before being copied across to the other two centres within a second.
+
+* Strongly Consistent Reads.
+> Data is consistent across all data-centres at all times.
+
+If you can handle the 1 second update time, Eventual is good. If not, Strong is best. I would assume that if your business only operates in one country (is not a global operation) you will be fine with Eventual.
+
+### Elements of DynamoDB
+
+* Tables
+* Items (Rows) - Individual Entities (StudentID)
+* Attributes (Columns) - Characteristics of Entities (Age of Student, Names)
+
+### Pricing 
+
+* Provisioned Throughput Capacity
+1. Write Throughput $0.0065 per hours every 10 units.
+2. Read Throughput $0.0065 per hour for every 50 units.
+
+* First 25GB stored per month is free:
+1. Storage costs of $0.25 GB per moth thereafter.
+
+## DynamoDB Indexes & Streams
+
+* Two types of Primary Keys:
+1. Single Attribute (UniqueID)
+> Partition Key (Hash Key) composed of one attribute.
+2. Composite ( UniqueID & Date Range)
+> Partition Key & Sort Key (Hash & Range) comprised of two atttributes.
+
+* Single Attribiute - Partition Key
+> DynamoDB uses the partition key's value as input to an internal hash function. The ouput from the hash function determines the partition ( the physical location in which the data is stored).
+
+> No two items in a table can have the same partition key value.
+
+> Think of users, one user to a partition key.
+
+* Composite - Partition Key & Sort Key
+> DynamoDB uses the partition key's value as input to an internal hash function. The ouput from the hash function determines the partition ( the physical location in which the data is stored).
+
+> Two items can have the same partition key, but they must have a different sort key.
+
+> All items with the same partition key are stored together, in sorted order by sort key value.
+
+> Think of users again, one user to one partition key, however when a user makes a forum post, he now generates individual sort key's for each post. When can then search for a user's posts with the partition key.
+
+
+
+
