@@ -330,5 +330,32 @@ If you can handle the 1 second update time, Eventual is good. If not, Strong is 
 > Think of users again, one user to one partition key, however when a user makes a forum post, he now generates individual sort key's for each post. When can then search for a user's posts with the partition key.
 
 
+## Indexes 
+
+1. Local Secondary Index
+* Has the SAME partition key, different sort key.
+* Can ONLY be created when creating a table. Cannot be removed or modified later.
+
+2. Global Secondary Index
+* Has a DIFFERENT partition key, and different sort key.
+* Can be created at table creation, or later.
+
+## Streams
+
+* Pretty new, may not yet be in exams.
+
+* Used to capture any kind of modification of the DynamoDB tables. 
+
+## Queries vs Scans
+
+### Queries 
+* A query operation finds items in a table using ONLY primary key attribute values. You must provide a partition attribute name and a distinct value to search for.
+
+* You can also optionally provide a sort key attribute name and value, and use a comparison operator to refine the search results. 
+
+### Scans 
+* A scan operation examines every item in the table. 
+
+> Try to use queries over scans, as they are more efficient.You don't dump the entire table.
 
 
