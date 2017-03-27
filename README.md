@@ -358,4 +358,74 @@ If you can handle the 1 second update time, Eventual is good. If not, Strong is 
 
 > Try to use queries over scans, as they are more efficient.You don't dump the entire table.
 
+## Calculating R/W Provisioned Throughput
+
+### Unit of Read provisioned throughput
+* All reads are rounded up to increments of 4KB.
+* Eventually Consistent Reads (default) = 2 reads per second.
+* Strongly Consistent Reads = 1 read per second
+
+### Unit of Write provisioned throughput
+* All writes are 1kb
+* All writes consist of 1 write per second
+
+> EXAMPLE QUESTION = YOU HAVE AN APPLICATION THAT REQUIRES TO READ 10 ITEMS OF 1KB PER SECOND USING EVENTUAL CONSISTENCY. WHAT SHOULD YOU SET THE READ THROUGHPUT TO?
+
+#### Key Figures
+* 10 Read Items of 1kb each 
+* Eventual Consistency = /2
+* Read items have a default value of 4kb. 
+
+#### Equations
+* Round all 1kb items to 4kb.
+* = 10 read items
+* Divide by 2 for eventual consistency. 
+* 5 units of read throughput
+
+> EXAMPLE QUESTION = YOU HAVE AN APPLICATION THAT REQUIRES TO READ 10 ITEMS OF 6KB PER SECOND USING EVENTUAL CONSISTENCY. WHAT SHOULD YOU SET THE READ THROUGHPUT TO?
+
+#### Key Figures
+* Default read units of 4kb.
+* Round all units upto next increment of 4.
+* 6kb -> 8kb = 2 read units per item. 
+* 10 items x 2 read units per item = 20 
+* 20 read units / 2 for eventual consistency.
+* 10 units of read throughput required.
+
+> EXAMPLE QUESTION = YOU HAVE AN APPLICATIO  THAT REQUIRES TO READ 5 ITEMS OF 10KB PER SECOND USING EVENTUAL CONSISTENCY. WHAT SHOULD YOU SET THE READ THROUGHPUT TO?
+
+#### Key Figures
+* Default read units of 4kb
+* Round all units to next increment of 4.
+* 10 -> 12 
+* 12kb/4kb max = 3 read units per item.
+* 5 items * 3 read units per item = 15 read units
+* 15 read units / 2 for eventual consistency
+* round 7.5 -> 8
+* 8 units of read throughput
+
+> EXAMPLE QUESTION = YOU HAVE AN APPLICATION THAT REQUIRES TO READ 5 ITEMS OF 10KB PER SECOND USING STRONG CONSISTENCY. WHAT SHOULD YOU SET THE READ THROUGHPUT TO?
+
+#### Key Figures
+* Default read units of 4kb 
+* Round all units to next increment of 4. 
+* 10 -> 12
+* 12kb/4kb max = 3 read units per item. 
+* 3 read units * 5 items = 15 read units
+* 15 read units / 1 for strong consistency
+* 15 units of read throughput 
+
+> EXAMPLE QUESTION = YOU HAVE AN APPLICATION THAT REQUIRES TO WRITE 5 ITEMS, WITH EACH ITEM BEING 10KB IN SIZE PER SECOND. WHAT SHOULD YOU SET THE WRITE THROUGHPUT TO? 
+
+#### Key Figures
+* Default write units of 1kb per secpnd
+* 5 items @ 10kb in size per second = 50kb per second
+* 50kb per second / 1kb per unit = 50 units
+* Write throughput of 50 units.
+
+* Should you hammer your DynamoDB with more data R/W operations than it is provisioned for, you will get a 400 HTTP STATUS CODE - ProvisionedThroughputExceededException
+> You exceeded your maximum allowed provisioned throughput for a table or for one or more global secondary indexes.
+
+
+
 
