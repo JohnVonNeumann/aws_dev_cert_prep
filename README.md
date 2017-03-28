@@ -423,9 +423,62 @@ If you can handle the 1 second update time, Eventual is good. If not, Strong is 
 * 50kb per second / 1kb per unit = 50 units
 * Write throughput of 50 units.
 
+> EXAMPLE QUESTION = YOU HAVE AN APPLICATION THAT REQUIRES TO WRITE 12 ITEMS OF 100KB PER ITEM EACH SECOND. WHAT SHOULD YOU SET THE WRITE THROUGHPUT TO? 
+
+#### Key Figures
+* Default write unit size of 1kb per second.
+* 12 items @ 100kb = 1200kb per second
+* 1200kb per second / 1kb per unit = 1200 units
+* Write throughput of 1200 units.
+
+### Point to remember
 * Should you hammer your DynamoDB with more data R/W operations than it is provisioned for, you will get a 400 HTTP STATUS CODE - ProvisionedThroughputExceededException
 > You exceeded your maximum allowed provisioned throughput for a table or for one or more global secondary indexes.
 
+## DynamoDB with Web Identity Providers
+* You can authenticate users uing Web Identity providers (Facebook, Google, Amazon or any other Open-ID Connect-Compatible Identity Provider). 
+* This is done using AssumeRoleWithWebIdentity API.
+* Need to create a role to use the API.
 
+### Steps taken to Auth with WIP 
+1. User authenticates with ID provider (Facebook)
+2. They are passed a token by the ID provider.
+3. Your code calls AssumeRoleWithWebIdentity API and provides the providers token and specifies the ARN for the IAM Role.
+4. App can now access DynamoDB from between 15 minutes to 1 hour (default = 1hr).
 
+## Conditional Updates vs Atomic Counters
+
+* Conditional updates are known as indempotent, that is that they only happen a condition is met. IE: We can create an update that says 'set price at $15 if price is >=$10' 
+
+* Atomic Counters are not indempotent, they aren't intelligent, they just increment or decrement, if a request fails and you're not sure if the request completed, hitting it again, may increment or decrement the item a second time.
+
+> If data has to be 100% accurate, use Conditional Updates. If not, use Atomic Counters.
+
+## Route53 Routing Policies
+
+### Simple Routing
+* Default policy when you create a new record set.
+* Most common when you have a single resource that performs a given function for a domain.
+> One web server that serves content for the http://example.com website
+
+### Weighted Routing
+* Allows us to weight routing paths in % terms. 
+* Perfect for A/B testing.
+* Can route across and within AZ's.
+> 100 requests are made, we have a weighted policy that pushs 30% to AP-Southeast-1 (or a load balancer) and 70% to AP-Southeast-2 (or a load balancer).
+
+### Latency Routing 
+* Allows us to route traffic based on lowest possible latency for end user. 
+* Effectively location based, it will route users to the best AZ for them.
+> You have users globally and wish to point them to the best possible region to provide them the lowest latency.
+
+### Failover Routing 
+* Allows us to create healthchecks for a server, and should a healthcheck fail, traffic will be redirected to a passive server.
+* Referred to as active/passive routing. 
+> Healthcheck fails on active server, all traffic is then routed through to the passive server.
+
+### Geolocation Routing
+* Could be viewed as very similar to Latency Routing.
+* In this instance however, routing is based on user's location and the content they should be seeing. 
+> User from UK and User from Aus visit their favorite website www.buyexamples.com and are redirected to their relevant TLD's. .uk and .au this happens because Aus customers may have a different product selection or shipping options.
 
